@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manas Dangi Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables for Premium Theme */
+        :root {
+            --bg-dark: #0a0a0c;
+            --bg-card: #16161a;
+            --accent: #6366f1;
+            --accent-glow: rgba(99, 102, 241, 0.2);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --white: #ffffff;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #818cf8, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 2rem;
+            border-radius: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--white);
+            box-shadow: 0 10px 20px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            background-color: #4f46e5;
+            transform: translateY(-2px);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 0;
+            transition: var(--transition);
+        }
+
+        nav.scrolled {
+            background: rgba(10, 10, 12, 0.8);
+            backdrop-filter: blur(12px);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .logo span { color: var(--accent); }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover { color: var(--white); }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 80px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            right: 0;
+            width: 400px;
+            height: 400px;
+            background: var(--accent-glow);
+            filter: blur(100px);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+        }
+
+        .hero-image-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .image-card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            aspect-ratio: 4/5;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: var(--transition);
+        }
+
+        .image-card:hover img { filter: grayscale(0%); }
+
+        .image-decor {
+            position: absolute;
+            inset: 0;
+            background: var(--accent);
+            border-radius: 24px;
+            transform: rotate(6deg) translate(15px, 15px);
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+        /* About & Stats */
+        .about {
+            padding: 8rem 0;
+            background: rgba(22, 22, 26, 0.4);
+        }
+
+        .section-tag {
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-card h4 { font-size: 2rem; color: var(--white); }
+        .stat-card p { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; }
+
+        /* Skills Glass Cards */
+        .skills-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .skill-group {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Experience Timeline */
+        .experience { padding: 8rem 0; }
+        
+        .timeline {
+            max-width: 800px;
+            margin: 4rem auto 0;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 14px;
+            height: 14px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        .exp-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+        }
+
+        .exp-card:hover { transform: translateX(10px); }
+
+        .exp-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            align-items: flex-start;
+        }
+
+        /* Project Grid */
+        .projects { padding: 8rem 0; background: #08080a; }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .project-overlay {
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+        }
+
+        .project-card h4 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .project-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .project-link:hover { color: var(--white); }
+
+        /* Footer */
+        footer {
+            padding: 4rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover { color: var(--white); }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-grid, .about-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero-text h1 { font-size: 3.5rem; }
+            .hero-text p { margin-left: auto; margin-right: auto; }
+            .nav-links { display: none; }
+            .exp-header { flex-direction: column; gap: 0.5rem; }
+        }
+
+        /* Simple Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container nav-content">
+            <a href="#" class="logo">MANAS DANGI<span>.</span></a>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#experience">Experience</a>
+                <a href="#projects">Projects</a>
+                <a href="mailto:dangimanas04@gmail.com" class="btn btn-primary" style="padding: 0.6rem 1.5rem;">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-grid">
+            <div class="hero-text">
+                <h1 class="reveal">Java <span class="text-gradient">Backend</span> Developer.</h1>
+                <p class="reveal">I'm Manas Dangi, a B.Tech student building high-performance systems and scalable software architecture.</p>
+                <div class="reveal">
+                    <a href="#projects" class="btn btn-primary">See My Work <i class="fas fa-arrow-right" style="margin-left: 10px;"></i></a>
+                </div>
+            </div>
+            <div class="hero-image reveal">
+                <div class="hero-image-container">
+                    <div class="image-decor"></div>
+                    <div class="image-card">
+                        <img src="my picture.png" 
+                             alt="Manas Dangi" 
+                             img-loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container about-grid">
+            <div class="reveal">
+                <span class="section-tag">Intro</span>
+                <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">Logic with Purpose.</h2>
+                <p style="color: var(--text-muted); margin-bottom: 2rem;">
+                    Final Year B.Tech (CSIT) student focused on Java, OOPS, and DSA. I specialize in building robust backend architectures that bridge complexity with efficiency.
+                </p>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>03+</h4>
+                        <p>Internships</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>10+</h4>
+                        <p>Projects</p>
+                    </div>
+                </div>
+            </div>
+            <div class="skills-list reveal">
+                <div class="skill-group">
+                    <h4 style="display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-server" style="color: var(--accent);"></i> Backend
+                    </h4>
+                    <div class="skill-tags">
+                        <span class="tag">Spring Boot</span>
+                        <span class="tag">Hibernate</span>
+                        <span class="tag">REST APIs</span>
+                        <span class="tag">MySQL</span>
+                        <span class="tag">Java OOPs</span>
+                    </div>
+                </div>
+                <div class="skill-group">
+                    <h4 style="display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-code" style="color: var(--accent);"></i> Languages
+                    </h4>
+                    <div class="skill-tags">
+                        <span class="tag">Java</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">C++</span>
+                        <span class="tag">HTML/CSS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="experience" id="experience">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <span class="section-tag">Career</span>
+                <h2 style="font-size: 3rem;">Professional Journey.</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="exp-card">
+                        <div class="exp-header">
+                            <div>
+                                <h4 style="font-size: 1.3rem;">Java Developer</h4>
+                                <p style="color: var(--accent); font-weight: 700;">Bloom Media</p>
+                            </div>
+                            <span class="tag" style="background: var(--accent-glow); color: var(--accent);">2025</span>
+                        </div>
+                        <p style="color: var(--text-muted);">Developed a Project Support Chat Bot using Spring Boot and MySQL.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot" style="background: var(--text-muted); box-shadow: none;"></div>
+                    <div class="exp-card">
+                        <div class="exp-header">
+                            <div>
+                                <h4 style="font-size: 1.3rem;">Java Development Intern</h4>
+                                <p style="color: var(--accent); font-weight: 700;">Oasis Infobyte</p>
+                            </div>
+                            <span class="tag">2025</span>
+                        </div>
+                        <p style="color: var(--text-muted);">Built backend logic architectures and Core Java projects.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot" style="background: var(--text-muted); box-shadow: none;"></div>
+                    <div class="exp-card">
+                        <div class="exp-header">
+                            <div>
+                                <h4 style="font-size: 1.3rem;">Web Development Intern</h4>
+                                <p style="color: var(--accent); font-weight: 700;">Cod Soft</p>
+                            </div>
+                            <span class="tag">2024</span>
+                        </div>
+                        <p style="color: var(--text-muted);">Designed responsive frontend modules using HTML/CSS/JS.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+        <div class="container">
+            <span class="section-tag">Portfolio</span>
+            <h2 style="font-size: 3rem; margin-bottom: 3rem;">Selected Work.</h2>
+            <div class="project-grid">
+                <div class="project-card reveal">
+                    <div style="height: 200px; background: #1a1a20; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-users" style="font-size: 4rem; opacity: 0.1;"></i>
+                    </div>
+                    <div class="project-overlay">
+                        <span style="font-size: 0.6rem; color: var(--accent); font-weight: 800; letter-spacing: 2px;">BACKEND</span>
+                        <h4>Employee Management</h4>
+                        <a href="https://github.com/manasdangi08/Employee_Management_System" target="_blank" class="project-link">
+                            View Repository <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="project-card reveal" style="transition-delay: 0.1s;">
+                    <div style="height: 200px; background: #1a1a20; display: flex; align-items: center; justify-content: center;">
+                        <i class="fab fa-spotify" style="font-size: 4rem; opacity: 0.1;"></i>
+                    </div>
+                    <div class="project-overlay">
+                        <span style="font-size: 0.6rem; color: var(--accent); font-weight: 800; letter-spacing: 2px;">FRONTEND</span>
+                        <h4>Spotify Interface</h4>
+                        <a href="https://github.com/manasdangi08/spotify-clone" target="_blank" class="project-link">
+                            View Repository <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="project-card reveal" style="transition-delay: 0.2s;">
+                    <div style="height: 200px; background: #1a1a20; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-money-bill-wave" style="font-size: 4rem; opacity: 0.1;"></i>
+                    </div>
+                    <div class="project-overlay">
+                        <span style="font-size: 0.6rem; color: var(--accent); font-weight: 800; letter-spacing: 2px;">JAVA</span>
+                        <h4>ATM Simulation</h4>
+                        <a href="https://github.com/manasdangi08/ATM-JAVA-PROJECT" target="_blank" class="project-link">
+                            View Repository <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="https://github.com/manasdangi08" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="mailto:dangimanas04@gmail.com"><i class="fas fa-envelope"></i></a>
+                <a href="tel:+919685227788"><i class="fas fa-phone"></i></a>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">&copy; 2024 Manas Dangi. Built with Purpose.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            
+            // Trigger Reveal Animations
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 100) {
+                    el.classList.add('visible');
+                }
+            });
+        });
+
+        // Trigger on initial load
+        window.dispatchEvent(new Event('scroll'));
+    </script>
+</body>
+</html>
